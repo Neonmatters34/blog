@@ -22,6 +22,7 @@ public class ListPosts implements Posts{
 
     @Override
     public void savePost(Post post) {
+    post.setId(allPosts.size() + 1);
     allPosts.add(post);
     }
 }
