@@ -5,16 +5,13 @@ import com.codeup.models.Post;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Matt on 1/5/17.
- */
-public class ListPosts implements Posts{
+
+public abstract class ListPosts implements Posts {
     private List<Post> allPosts;
 
     public ListPosts(){
         allPosts = new ArrayList<>();
     }
-
     @Override
     public List<Post> getAllPosts() {
         return allPosts;
@@ -22,7 +19,7 @@ public class ListPosts implements Posts{
 
     @Override
     public void savePost(Post post) {
-    post.setId(allPosts.size() + 1);
+        post.setId(allPosts.size()+ 1);
     allPosts.add(post);
     }
 }

@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation-flex.min.css"/>
     <meta charset="UTF-8" />
     <title>Title</title>
 </head>
 <body>
-    <form method="post" th:action="@{/posts/create}" th:object="${post}">
-        <label for="title">title
-            <input id="title" name="title" type="text" th:field="*{title}" />
-        </label>
-        <label for="body">body
-            <input id="body" name="body" type="text" th:field="*{body}" />
-        </label>
-        <button type="submit"></button>
-    </form>
+    <div>
+        <form method="post" th:action="@{/posts/create}" th:object="${post}">
+            <div class="large-8 expanded">
+                <label for="title">title
+                    <input id="title" name="title" type="text" th:field="*{title}" />
+                </label>
+            </div>
+            <div class="large-8 expanded">
+                <label for="body">body
+                    <textarea id="body" name="body" type="text" th:field="*{body}"></textarea>
+                </label>
+            </div>
+            <button class="button" type="submit">button</button>
+        </form>
+    </div>
 </body>
 </html>

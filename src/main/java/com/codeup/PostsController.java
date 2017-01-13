@@ -2,13 +2,14 @@ package com.codeup;
 
 import com.codeup.dao.DaoFactory;
 import com.codeup.models.Post;
+
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -31,6 +32,39 @@ public class PostsController {
     @PostMapping("/create")
     public String createNewPost(@ModelAttribute Post post){
         DaoFactory.getPostsDao().savePost(post);
+        return "redirect:/posts";
+    }
+    @GetMapping("/{id}")
+    public String individualShowPage(Model model, @PathVariable int id) {
+        Post post = DaoFactory.getPostsDao().getPostById(id);
+        model.addAttribute("post", post);
+        return "posts/show";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editPost(Model model, @PathVariable int id) {
+        Post post = DaoFactory.getPostsDao().getPostById(id);
+        model.addAttribute("post", post);
+        return "posts/edit";
+    }
+    @PostMapping("/{id}/edit")
+    public String editPost(@Valid Post post, Errors validation, Model model, @PathVariable int id)  {
+        if(validation.hasErrors()){
+            model.addAttribute("errors", validation);
+            model.addAttribute("post", post);
+            return "posts/edit";
+        }
+        Post existingPost = DaoFactory.getPostsDao().getPostById(id);
+        existingPost.setTitle(post.getTitle());
+        existingPost.setBody(post.getBody());
+        DaoFactory.getPostsDao().updatePost(existingPost);
+        return "redirect:/posts/" + id;
+    }
+
+    @PostMapping("/{id}/delete")
+    public String deletePost(@PathVariable int id) {
+        Post post = DaoFactory.getPostsDao().getPostById(id);
+        DaoFactory.getPostsDao().deletePost(post);
         return "redirect:/posts";
     }
 }

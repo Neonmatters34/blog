@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation-flex.min.css"/>
+    <link rel="stylesheet" th:href="@{//style.css}" type="text/css"/>
     <meta charset="UTF-8" />
     <title></title>
 </head>
 <body>
-    <table>
-        <tr>
-            <th>id</th>
-            <th>title</th>
-            <th>body</th>
-        </tr>
-        <tr th:each="post : ${posts}">
-            <td th:text="${post.id}">id</td>
-            <td th:text="${post.title}">title</td>
-            <td th:text="${post.body}">body</td>
-        </tr>
-    </table>
-
+    <div class="row align-center">
+        <div class="column large-8">
+            <div class="posts row align-left" th:each="post : ${posts}">
+                <div id="postBody" class="row align-center">
+                    <p class="column medium-1" id="idNumber" th:text="${post.id}"></p>
+                    <a th:href="@{'/posts/' + ${post.id} + '/edit'}"> <h4 class="column medium-11" id="title" th:text="${post.title}">How to get ripped qwik</h4></a>
+                    <p class="column medium-12" id="body" th:text="${post.body}">
+                    Your bones don't break, mine do. That's clear. Your cells react to bacteria and viruses differently than mine.</p>
+                </div>
+            </div>
+            <a href="posts/create"><button class="button small justify" type="button">Create</button></a>
+        </div>
+    </div>
 </body>
 </html>
